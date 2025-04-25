@@ -1,8 +1,8 @@
 import { expect } from '../../tests/_fixtures/fixtures';
-import { testStep } from '../../src/common/helpers/pw';
+import { testStep } from '../common/helpers/pw';
 import { SUCCESS_CODE } from './constants/responceCodes';
 
-export class StudentsAPIClient {
+export class GoodsAPI {
   constructor(request) {
     this.request = request;
   }

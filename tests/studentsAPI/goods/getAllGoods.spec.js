@@ -1,8 +1,8 @@
 import { test } from '../../_fixtures/fixtures';
 
-test('GET all goods', async ({ studentsApi }) => {
-  const response = await studentsApi.getAllGoods();
+test('GET all goods', async ({ goodsAPI }) => {
+  const response = await goodsAPI.getAllGoods();
 
-  await studentsApi.assertSuccessResponseCode(response);
-  await studentsApi.assertBodyIsNotEmpty(response);
+  await goodsAPI.assertSuccessResponseCode(response);
+  await goodsAPI.assertBodyIsNotEmpty(response);
 });
