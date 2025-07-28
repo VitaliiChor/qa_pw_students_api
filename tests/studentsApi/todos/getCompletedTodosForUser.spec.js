@@ -1,4 +1,5 @@
-import { test } from '../../_fixtures/fixtures';
+import { request } from 'playwright-core';
+import { expect, test } from '../../_fixtures/fixtures';
 
 /*
 Preconditions:
@@ -23,6 +24,33 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+let savedUserId;
 
-test('GET completed todos by existing userId', async ({}) => {});
+test.beforeEach(async ({ request }) => {
+  const response = await request.get('/todos');
+  expect(response.status()).toBe(200);
+  const body = await await response.json();
+
+  const completeToDo = body.find(todo => todo.completed === true);
+  expect(completeToDo).toBeDefined();
+
+  savedUserId = completeToDo.userId;
+});
+
+test('GET completed todos by existing userId', async ({ request }) => {
+  const response = await request.get('/todos', {
+    params: {
+      userId: savedUserId,
+      completed: true,
+    },
+  });
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+
+  for (const todo of body) {
+    expect(todo.userId).toBe(savedUserId);
+    expect(todo.completed).toBe(true);
+  }
+});
