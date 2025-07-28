@@ -1,5 +1,6 @@
 import { request } from 'playwright-core';
 import { expect, test } from '../../_fixtures/fixtures';
+import { SUCCESS_CODE } from '../../../src/api/constants/responceCodes';
 
 /*
 Preconditions:
@@ -28,7 +29,7 @@ let savedUserId;
 
 test.beforeEach(async ({ request }) => {
   const response = await request.get('/todos');
-  expect(response.status()).toBe(200);
+  expect(response.status()).toBe(SUCCESS_CODE);
   const body = await await response.json();
 
   const completeToDo = body.find(todo => todo.completed === true);
@@ -45,7 +46,7 @@ test('GET completed todos by existing userId', async ({ request }) => {
     },
   });
 
-  expect(response.status()).toBe(200);
+  expect(response.status()).toBe(SUCCESS_CODE);
 
   const body = await response.json();
 
